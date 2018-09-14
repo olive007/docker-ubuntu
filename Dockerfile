@@ -43,3 +43,6 @@ RUN rm /home/$NEW_USER/.bashrc
 # Add the public ssh key to the 'authorized_keys' file to easily access to the docker container
 RUN mkdir /home/$NEW_USER/.ssh
 ADD $SSH_KEY_URL /home/$NEW_USER/.ssh/authorized_keys
+
+# Go back to root for the next configuration done by the daughter classes
+USER root
