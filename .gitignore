@@ -2,3 +2,4 @@
 *.pub
 # Ignore emacs tmp file
 *~
+\#*#

@@ -45,5 +45,14 @@ ADD $SSH_KEY_URL /home/$NEW_USER/.ssh/authorized_keys
 USER root
 WORKDIR /
 
-# Start service
-ENTRYPOINT ["service","ssh","start"]
+# Generate the startup script
+
+RUN mkdir /usr/local/script
+RUN echo "#!/bin/sh" > /usr/local/script/startup.sh
+RUN chmod +x /usr/local/script/startup.sh
+RUN ln -s /usr/local/script/startup.sh /usr/local/bin/startup-script
+
+# Start SSH service
+RUN echo "service ssh start" >> /usr/local/script/startup.sh
+
+CMD startup-script && bash
