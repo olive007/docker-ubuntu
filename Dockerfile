@@ -10,13 +10,10 @@ ARG SSH_KEY_URL=https://gist.githubusercontent.com/olive007/0eea691d672d82782387
 RUN apt-get update
 
 # Update packages to last version 
-RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y 
+RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq
 
 # Install several usefull packages
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends iproute2 openssh-server sudo emacs-nox openssl
-
-# Start service
-RUN service ssh start
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends iproute2 openssh-server sudo emacs-nox openssl wget htop unzip
 
 # Add new user with password as test
 RUN useradd -mG sudo -s /bin/bash -p $(openssl passwd $USER_PASSWORD) $NEW_USER
@@ -46,3 +43,7 @@ ADD $SSH_KEY_URL /home/$NEW_USER/.ssh/authorized_keys
 
 # Go back to root for the next configuration done by the daughter classes
 USER root
+WORKDIR /
+
+# Start service
+ENTRYPOINT ["service","ssh","start"]
