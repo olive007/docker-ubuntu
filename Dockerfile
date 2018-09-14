@@ -26,6 +26,9 @@ RUN chmod 644 /home/bash.aliases /home/bash.prompt
 RUN echo "[ -f /home/bash.aliases ] && . /home/bash.aliases" >> /etc/bash.bashrc
 RUN echo "[ -f /home/bash.prompt ] && . /home/bash.prompt" >> /etc/bash.bashrc
 
+# Remove basic bash configuration
+RUN rm /root/.bashrc
+
 # Change user
 USER $NEW_USER
 WORKDIR /home/olive
