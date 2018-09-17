@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:16.04
 MAINTAINER SECRET Olivier (olivier@devolive.be)
 
 # Define variable
