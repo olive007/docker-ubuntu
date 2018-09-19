@@ -2,8 +2,9 @@ FROM ubuntu:16.04
 MAINTAINER SECRET Olivier (olivier@devolive.be)
 
 # Define variable
-ARG NEW_USER=olive
-ARG USER_PASSWORD=test
+ARG NEW_USER_NAME=olive
+ENV NEW_USER_NAME=$NEW_USER_NAME
+ARG NEW_USER_PASSWORD=test
 ARG SSH_KEY_URL=https://gist.githubusercontent.com/olive007/0eea691d672d827823877c180c4cc354/raw/docker_rsa.pub
 
 # Update the package list
@@ -16,7 +17,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends iproute2 openssh-server sudo emacs-nox openssl wget htop unzip
 
 # Add new user with password as test
-RUN useradd -mG sudo -s /bin/bash -p $(openssl passwd $USER_PASSWORD) $NEW_USER
+RUN useradd -mG sudo -s /bin/bash -p $(openssl passwd $NEW_USER_PASSWORD) $NEW_USER_NAME
 
 # Get bash configuration file
 ADD https://gist.githubusercontent.com/olive007/87f72fa69a071dc7d64430317b31d1f2/raw/bash.aliases /home/bash.aliases 
@@ -31,15 +32,15 @@ RUN echo "[ -f /home/bash.prompt ] && . /home/bash.prompt" >> /etc/bash.bashrc
 RUN rm /root/.bashrc
 
 # Change user
-USER $NEW_USER
+USER $NEW_USER_NAME
 WORKDIR /home/olive
 
 # Remove basic bash configuration for the new user
-RUN rm /home/$NEW_USER/.bashrc
+RUN rm /home/$NEW_USER_NAME/.bashrc
 
 # Add the public ssh key to the 'authorized_keys' file to easily access to the docker container
-RUN mkdir /home/$NEW_USER/.ssh
-ADD $SSH_KEY_URL /home/$NEW_USER/.ssh/authorized_keys
+RUN mkdir /home/$NEW_USER_NAME/.ssh
+ADD $SSH_KEY_URL /home/$NEW_USER_NAME/.ssh/authorized_keys
 
 # Go back to root for the next configuration
 USER root
