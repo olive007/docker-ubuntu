@@ -41,18 +41,29 @@ RUN rm /home/$NEW_USER/.bashrc
 RUN mkdir /home/$NEW_USER/.ssh
 ADD $SSH_KEY_URL /home/$NEW_USER/.ssh/authorized_keys
 
-# Go back to root for the next configuration done by the daughter classes
+# Go back to root for the next configuration
 USER root
 WORKDIR /
 
-# Generate the startup script
+# Create the script directory
+RUN mkdir -p /usr/local/script
 
-RUN mkdir /usr/local/script
-RUN echo "#!/bin/sh" > /usr/local/script/startup.sh
+# Copy the entry-point script
+COPY usr/local/script/entry-point.sh /usr/local/script/entry-point.sh
+RUN chmod +x /usr/local/script/entry-point.sh && \
+    ln -s /usr/local/script/entry-point.sh /usr/local/bin/entry-point
+
+# Copy the startup script
+COPY usr/local/script/startup.sh /usr/local/script/startup.sh
 RUN chmod +x /usr/local/script/startup.sh
-RUN ln -s /usr/local/script/startup.sh /usr/local/bin/startup-script
 
-# Start SSH service
+# Copy the infinite-loop script
+COPY usr/local/script/infinite-loop.sh /usr/local/script/infinite-loop.sh
+RUN chmod +x /usr/local/script/infinite-loop.sh
+
+# Start SSH service with the startup script
 RUN echo "service ssh start" >> /usr/local/script/startup.sh
 
-CMD startup-script && bash
+ENTRYPOINT ["entry-point"]
+
+CMD ["bash"]
