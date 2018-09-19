@@ -4,6 +4,13 @@ MAINTAINER SECRET Olivier (olivier@devolive.be)
 # Define variable
 ARG NEW_USER_NAME=olive
 ENV NEW_USER_NAME=$NEW_USER_NAME
+
+ARG NEW_USER_ID=1000
+ENV NEW_USER_ID=$NEW_USER_ID
+
+ARG NEW_GROUP_ID=1000
+ENV NEW_GROUP_ID=$NEW_GROUP_ID
+
 ARG NEW_USER_PASSWORD=test
 ARG SSH_KEY_URL=https://gist.githubusercontent.com/olive007/0eea691d672d827823877c180c4cc354/raw/docker_rsa.pub
 
