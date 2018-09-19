@@ -2,8 +2,6 @@
 
 set -e
 
-/usr/local/script/startup.sh
-
 if [ -t 0 ] ; then
 
     echo "Container started with interactive shell"

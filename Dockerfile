@@ -66,4 +66,4 @@ RUN echo "service ssh start" >> /usr/local/script/startup.sh
 
 ENTRYPOINT ["entry-point"]
 
-CMD ["bash"]
+CMD ["/usr/local/script/startup.sh && bash"]
