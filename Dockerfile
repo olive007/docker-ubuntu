@@ -21,7 +21,17 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq
 
 # Install several usefull packages
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends iproute2 openssh-server sudo emacs-nox openssl wget htop unzip
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
+    				   iproute2 \
+				   openssh-server \
+				   sudo \
+				   emacs-nox \
+				   openssl \
+				   wget \
+				   htop \
+				   curl \
+				   ca-certificates \
+				   unzip
 
 # Add new user with password as test
 RUN useradd -mG sudo -s /bin/bash -p $(openssl passwd $NEW_USER_PASSWORD) $NEW_USER_NAME
