@@ -14,5 +14,5 @@ signalCaught() {
 
 while ! `$SIGNAL_CAUGHT`
 do
-    sleep 60
+    sleep 2
 done
