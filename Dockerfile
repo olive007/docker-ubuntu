@@ -53,4 +53,5 @@ ENV CONTAINER_BASH_PROMPT=https://gist.githubusercontent.com/olive007/87f72fa69a
 ENTRYPOINT ["entry-point"]
 
 # By default launch the startup script and login as the user
-CMD ["/usr/local/script/startup.sh && cd /home/$CONTAINER_USER_NAME && su $CONTAINER_USER_NAME"]
+#CMD ["/usr/local/script/startup.sh && cd /home/$CONTAINER_USER_NAME && su $CONTAINER_USER_NAME"]
+CMD ["default-command"]

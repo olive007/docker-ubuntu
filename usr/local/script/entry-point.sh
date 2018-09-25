@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -e
-
 echo "Generate the locale $CONTAINER_LOCALE"
 locale-gen $CONTAINER_LOCALE > /dev/null
 
@@ -45,18 +43,31 @@ if ! shopt -oq posix; then
 fi" >> /etc/bash.bashrc
 
 
-if [ -t 0 ] ; then
+if [ -t 0 ]; then
 
     echo "Container started with interactive shell"
-    # Execute command from CMD value
 
-    #export $CONTAINER_USER_NAME
-    /bin/bash -c "$@ "
+    if [ "$@" = "default-command" ]; then
+	# Launch the startup script
+	/usr/local/script/startup.sh
+	# Login as the addtional user
+	cd /home/$CONTAINER_USER_NAME
+	su $CONTAINER_USER_NAME
+    else
+	exec $@
+    fi
+    
 else
-
+    
     echo "Container started without interactive shell"
-    # Execute command from CMD value
-    /bin/bash -c "$@"
-    # Start an infinite loop after to don't stop the container
-    infinite-loop
+    
+    if [ "$@" = "default-command" ]; then
+	# Launch the startup script
+	/usr/local/script/startup.sh
+	# Star an infinite loop to not stop the container
+	exec infinite-loop
+    else
+	exec $@
+    fi
+
 fi
