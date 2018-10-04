@@ -1,6 +1,11 @@
 #!/bin/sh
 
+
+CHILDREN_SCRIPT_DIRECTORY=/usr/local/script/entry-point.d
+
 id -u $CONTAINER_USER_NAME >/dev/null 2>/dev/null
+# Check we already have add the new user
+# (To know if we start or restart the container)
 if [ $? -ne 0 ]; then
 
     echo "Generate the locale $CONTAINER_LOCALE"
@@ -45,6 +50,13 @@ if ! shopt -oq posix; then
   fi
 fi" >> /etc/bash.bashrc
 
+    for filename in `ls -rt $CHILDREN_SCRIPT_DIRECTORY`; do
+
+	echo "Configuration form $filename"
+	. $CHILDREN_SCRIPT_DIRECTORY/$filename
+
+    done
+    
 fi
 
 if [ -t 0 ]; then
