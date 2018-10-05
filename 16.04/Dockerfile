@@ -20,13 +20,18 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 				   		   ca-certificates \
 				   		   unzip
 
+# Replace the bash configuration
+COPY etc/bash.bashrc /etc/bash.bashrc
+
 # Create the script directory
 RUN mkdir -p /usr/local/script
 
 # Copy the entry-point script
 COPY usr/local/script/entry-point.sh /usr/local/script/entry-point.sh
-RUN chmod +x /usr/local/script/entry-point.sh && \
-    ln -s /usr/local/script/entry-point.sh /usr/local/bin/entry-point
+RUN chmod +x /usr/local/script/entry-point.sh
+
+# Create the entry-point children directory
+RUN mkdir /usr/local/script/entry-point.d/
 
 # Copy the startup script
 COPY usr/local/script/startup.sh /usr/local/script/startup.sh
@@ -50,8 +55,7 @@ ENV SSH_KEY_URL=https://gist.githubusercontent.com/olive007/0eea691d672d82782387
 ENV CONTAINER_BASH_ALIASES=https://gist.githubusercontent.com/olive007/87f72fa69a071dc7d64430317b31d1f2/raw/bash.aliases
 ENV CONTAINER_BASH_PROMPT=https://gist.githubusercontent.com/olive007/87f72fa69a071dc7d64430317b31d1f2/raw/bash.prompt
 
-ENTRYPOINT ["entry-point"]
+ENTRYPOINT ["/usr/local/script/entry-point.sh"]
 
 # By default launch the startup script and login as the user
-#CMD ["/usr/local/script/startup.sh && cd /home/$CONTAINER_USER_NAME && su $CONTAINER_USER_NAME"]
 CMD ["default-command"]

@@ -20,6 +20,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 				   		   ca-certificates \
 				   		   unzip
 
+# Replace the bash configuration
+COPY etc/bash.bashrc /etc/bash.bashrc
+
 # Create the script directory
 RUN mkdir -p /usr/local/script
 

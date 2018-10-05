@@ -16,5 +16,7 @@ When the container start all those action is done
    - CONTAINER_BASH_ALIASES
    - CONTAINER_BASH_PROMPT
 
-
+# Next configuration
+ Every script which have to be run after the first start of the container have to be into the /usr/local/script/entry-point.d/ folder
+ 
 [1]: https://help.ubuntu.com/community/Locale

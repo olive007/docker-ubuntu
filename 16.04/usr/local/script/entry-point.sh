@@ -1,6 +1,11 @@
 #!/bin/sh
 
+
+CHILDREN_SCRIPT_DIRECTORY=/usr/local/script/entry-point.d
+
 id -u $CONTAINER_USER_NAME >/dev/null 2>/dev/null
+# Check we already have add the new user
+# (To know if we start or restart the container)
 if [ $? -ne 0 ]; then
 
     echo "Generate the locale $CONTAINER_LOCALE"
@@ -29,27 +34,19 @@ if [ $? -ne 0 ]; then
     wget -q $CONTAINER_BASH_PROMPT -O/home/bash.prompt
     chmod 644 /home/bash.aliases /home/bash.prompt
 
-    # Customize bash configuration:
-    # - Add personal aliases
-    # - Add personal prompt
-    # - Enable bash-completion
-    echo "
-[ -f /home/bash.aliases ] && . /home/bash.aliases
-[ -f /home/bash.prompt ] && . /home/bash.prompt
 
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi" >> /etc/bash.bashrc
+    for filename in `ls -rt $CHILDREN_SCRIPT_DIRECTORY`; do
 
+	echo "Configuration form $filename"
+	. $CHILDREN_SCRIPT_DIRECTORY/$filename
+
+    done
+    
 fi
 
 if [ -t 0 ]; then
 
-    echo "Container started with interactive shell"
+    echo "Container started with interactive shell (IP: "`hostname -i`")"
 
     if [ "$@" = "default-command" ]; then
 	# Launch the startup script
@@ -63,7 +60,7 @@ if [ -t 0 ]; then
     
 else
     
-    echo "Container started without interactive shell"
+    echo "Container started with interactive shell (IP: "`hostname -i`")"
     
     if [ "$@" = "default-command" ]; then
 	# Launch the startup script
