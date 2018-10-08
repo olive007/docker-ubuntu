@@ -15,6 +15,7 @@ When the container start all those action is done
  - Bash is customized with personal prompt and aliases. File are downloaded form the URL saved into those variables   
    - CONTAINER_BASH_ALIASES
    - CONTAINER_BASH_PROMPT
+ - Ssh key is downloaded form CONTAINER_SSH_KEY_URL
 
 # Next configuration
  Every script which have to be run after the first start of the container have to be into the /usr/local/script/entry-point.d/ folder
