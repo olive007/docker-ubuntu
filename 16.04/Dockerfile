@@ -42,7 +42,7 @@ COPY usr/local/script/startup.sh /usr/local/script/container-stopped.sh
 RUN chmod +x /usr/local/script/container-stopped.sh
 
 # Start SSH service with the startup script
-RUN echo "service ssh restart" >> /usr/local/script/startup.sh
+RUN echo "service ssh start" >> /usr/local/script/startup.sh
 
 # Stop SSH service with the container-stopped script
 RUN echo "service ssh stop" >> /usr/local/script/container-stopped.sh
