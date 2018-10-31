@@ -1,6 +1,8 @@
 FROM ubuntu:18.04
 MAINTAINER SECRET Olivier (olivier@devolive.be)
 
+ARG GIT_URL=https://raw.githubusercontent.com/olive007/docker-commonFile
+
 # Update the package list and
 # Update packages to last version and
 # Install several usefull packages
@@ -21,24 +23,24 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 				   		   unzip
 
 # Replace the bash configuration
-COPY etc/bash.bashrc /etc/bash.bashrc
+ADD $GIT_URL/master/etc/bash.bashrc /etc/bash.bashrc
 
 # Create the script directory
 RUN mkdir -p /usr/local/script
 
 # Copy the entry-point script
-COPY usr/local/script/entry-point.sh /usr/local/script/entry-point.sh
+ADD $GIT_URL/master/usr/local/script/entry-point.sh /usr/local/script/entry-point.sh
 RUN chmod +x /usr/local/script/entry-point.sh
 
 # Create the entry-point children directory
 RUN mkdir /usr/local/script/entry-point.d/
 
 # Copy the startup script
-COPY usr/local/script/startup.sh /usr/local/script/startup.sh
+ADD $GIT_URL/master/usr/local/script/startup.sh /usr/local/script/startup.sh
 RUN chmod +x /usr/local/script/startup.sh
 
 # Copy the container-stopped script
-COPY usr/local/script/startup.sh /usr/local/script/container-stopped.sh
+ADD $GIT_URL/master/usr/local/script/startup.sh /usr/local/script/container-stopped.sh
 RUN chmod +x /usr/local/script/container-stopped.sh
 
 # Start SSH service with the startup script
