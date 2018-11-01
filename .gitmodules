@@ -1,3 +1,0 @@
-[submodule "common_file"]
-	path = common_file
-	url = git@github.com:olive007/docker-commonFile.git

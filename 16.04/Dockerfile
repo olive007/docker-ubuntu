@@ -24,24 +24,25 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 
 # Replace the bash configuration
 ADD $GIT_URL/master/etc/bash.bashrc /etc/bash.bashrc
+RUN chmod 644 /etc/bash.bashrc
 
 # Create the script directory
 RUN mkdir -p /usr/local/script
 
 # Copy the entry-point script
 ADD $GIT_URL/master/usr/local/script/entry-point.sh /usr/local/script/entry-point.sh
-RUN chmod +x /usr/local/script/entry-point.sh
+RUN chmod 755 /usr/local/script/entry-point.sh
 
 # Create the entry-point children directory
 RUN mkdir /usr/local/script/entry-point.d/
 
 # Copy the startup script
 ADD $GIT_URL/master/usr/local/script/startup.sh /usr/local/script/startup.sh
-RUN chmod +x /usr/local/script/startup.sh
+RUN chmod 755 /usr/local/script/startup.sh
 
 # Copy the container-stopped script
 ADD $GIT_URL/master/usr/local/script/startup.sh /usr/local/script/container-stopped.sh
-RUN chmod +x /usr/local/script/container-stopped.sh
+RUN chmod 755 /usr/local/script/container-stopped.sh
 
 # Start SSH service with the startup script
 RUN echo "service ssh start" >> /usr/local/script/startup.sh
