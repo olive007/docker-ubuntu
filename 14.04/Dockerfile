@@ -56,9 +56,9 @@ ENV CONTAINER_USER_NAME=olive
 ENV CONTAINER_USER_PASSWORD=test
 ENV CONTAINER_USER_UID=1000
 ENV CONTAINER_USER_GID=1000
-ENV CONTAINER_SSH_KEY_URL=https://gist.githubusercontent.com/olive007/0eea691d672d827823877c180c4cc354/raw/docker_rsa.pub
-ENV CONTAINER_BASH_ALIASES=https://gist.githubusercontent.com/olive007/87f72fa69a071dc7d64430317b31d1f2/raw/bash.aliases
-ENV CONTAINER_BASH_PROMPT=https://gist.githubusercontent.com/olive007/87f72fa69a071dc7d64430317b31d1f2/raw/bash.prompt
+ENV CONTAINER_URL_SSH_KEY=https://gist.githubusercontent.com/olive007/0eea691d672d827823877c180c4cc354/raw/docker_rsa.pub
+ENV CONTAINER_URL_BASH_ALIASES=https://gist.githubusercontent.com/olive007/87f72fa69a071dc7d64430317b31d1f2/raw/bash.aliases
+ENV CONTAINER_URL_BASH_PROMPT=https://gist.githubusercontent.com/olive007/87f72fa69a071dc7d64430317b31d1f2/raw/bash.prompt
 
 ENTRYPOINT ["/usr/local/script/entry-point.sh"]
 
