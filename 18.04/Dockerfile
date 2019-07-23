@@ -7,20 +7,21 @@ ARG GIT_URL=https://raw.githubusercontent.com/olive007/docker-commonFile
 # Update packages to last version and
 # Install several usefull packages
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
-    				       	   	   locales \
-						   bash-completion \
-    				   		   iproute2 \
-				   		   openssh-server \
-				   		   sudo \
-				   		   emacs-nox \
-				   		   openssl \
-				   		   wget \
-				   		   htop \
-				   		   curl \
-				   		   ca-certificates \
-				   		   unzip
+	DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
+									gnupg \
+									locales \
+									bash-completion \
+									iproute2 \
+									openssh-server \
+									sudo \
+									emacs-nox \
+									openssl \
+									wget \
+									htop \
+									curl \
+									ca-certificates \
+									unzip
 
 # Replace the bash configuration
 ADD $GIT_URL/master/etc/bash.bashrc /etc/bash.bashrc
